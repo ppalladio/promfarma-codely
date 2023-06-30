@@ -2,6 +2,6 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-	<div> promofarma</div>
+	<div className='capitalize'> promofarma</div>
   )
 }
