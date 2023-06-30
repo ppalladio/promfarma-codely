@@ -1,0 +1,3 @@
+* Usamos: 
+Next.js
+TailWind
