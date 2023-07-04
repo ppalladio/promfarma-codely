@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
-import{ products} from '../public/assets/products'
-type CardProps = {
+interface CardProps = {
     id: string;
-    name: string;
+    name: string | null;
 	country?:string;
     price?: number; //> current price
 	state?:string;
