@@ -2,18 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body,
 html,
-:root{
-	height: 100%;
+:root {
+    height: 100%;
 }
 
-*{
-	scroll-behavior: smooth;
-	margin: 0;
-	padding: 0;
+
+.favorite-icon 
+{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-size: 24px;
+	color: #ccc;
+	transition:color 0.3s ease;
+	cursor: pointer;
+	z-index: 2;
+}
+.favorite-icon .active
+{
+	
+	
+	color: red;
+}
+
+* {
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
 }
 /* :root {
   --foreground-rgb: 0, 0, 0;
