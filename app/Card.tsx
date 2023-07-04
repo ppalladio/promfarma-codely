@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
-interface CardProps = {
+interface CardProps  {
+	key?: string;
     id: string;
-    name: string | null;
+    name: string ;
 	country?:string;
     price?: number; //> current price
 	state?:string;
@@ -17,10 +18,11 @@ interface CardProps = {
     productIndex?: string;
     category?: string; //> Skincare
     hasStock?: boolean;
-    onSubmit?: () => void;
+    // onSubmit?: () => void;
 };
 
 const Card: React.FC<CardProps> = ({
+	key,
     id,
     name,
 	country,
@@ -35,7 +37,7 @@ const Card: React.FC<CardProps> = ({
     productIndex,
     category,
     hasStock,
-    onSubmit,
+    // onSubmit,
 }) => {
     const [isFavorite, setIsFavorite] = useState(favorite);
 
@@ -44,14 +46,17 @@ const Card: React.FC<CardProps> = ({
     };
 
     return (
-        <div className="relative">
+        <div className="relative flex flex-row p-[3px] flex-wrap max-w-[400px] items-center justify-center">
             <FaHeart
                 className={`favorite-icon ${isFavorite ? 'favorite-icon--active' : ''}`}
                 onClick={handleFavoriteClick}
             />
             <div>
+				<hr />
                 <h2>{name}</h2>
                 <p>{price}</p>
+				<p>{brandName}</p>
+				<hr />
             </div>
         </div>
     );

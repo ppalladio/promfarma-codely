@@ -1,39 +1,5 @@
 export const products = [
-    {
-        product_id: 'c1e8d218-8a47-4064-ab95-a59cb6356a5c',
-        updated_at: '2023-06-30 06:32:59',
-        name: 'Heliocare 360º 30cáps.',
-        product_state: 'enabled',
-        has_stock: true,
-        recommended_prices: [
-            {
-                amount: 15.48,
-                currency: 'EUR',
-                country: 'FR',
-            },
-            {
-                amount: 36.95,
-                currency: 'EUR',
-                country: 'ES',
-            },
-            {
-                amount: 34,
-                currency: 'EUR',
-                country: 'IT',
-            },
-        ],
-        manufacturer: {
-            manufacturer_id: '629d59d0-7dc5-46b7-abbc-923a275e670e',
-            manufacturer_name: 'IFC CANTABRIA',
-        },
-        brand: {
-            brand_id: 'e085d7b5-6a97-4b33-990d-f92d95475e62',
-        },
-        main_category: {
-            category_id: 'f6738502-b893-4fed-9cf1-75d85f3b34c7',
-            category_name: 'Solar',
-        },
-    },
+   
     {
         product_id: 'ffcb7003-916b-4006-99d3-ad517385cf2f',
         updated_at: '2023-07-04 04:46:33',
