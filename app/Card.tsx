@@ -1,12 +1,13 @@
+'use client';
 
-import React from 'react';
-
+import { useState } from 'react';
+import { FaHeart } from 'react-icons/fa';
 type CardProps = {
     id: string;
     name: string;
     price: string; //> current price
-    pvp: string; //> recommended price
-    brandName: string;
+    brandName?: string;
+    pvp?: string; //> recommended price
     favorite?: boolean; //> favorite
     favoriteImg?: string;
     productIndex?: string;
@@ -22,6 +23,7 @@ type CardProps = {
 
 const Card: React.FC<CardProps> = ({
     id,
+    name,
     price,
     pvp,
     brandName,
@@ -37,7 +39,23 @@ const Card: React.FC<CardProps> = ({
     saleCountry,
     onSubmit,
 }) => {
-    return <div>Card</div>;
+    const [isFavorite, setIsFavorite] = useState(favorite || false);
+    const handleFavoriteClick = () => {
+        setIsFavorite(!isFavorite);
+    };
+    const favoriteIconClass = `favorite-icon ${isFavorite ? 'red' : ''}`;
+
+    return (
+        <div className="bg-gray-300 flex flex-row relative rounded-[5px] ">
+            <div className={favoriteIconClass} onClick={handleFavoriteClick}>
+                <FaHeart size={20} />
+            </div>
+            <div>
+                <h2>{name}</h2>
+                <p>{price}</p>
+            </div>
+        </div>
+    );
 };
 
 export default Card;
