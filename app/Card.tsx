@@ -2,41 +2,40 @@
 
 import { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
+import{ products} from '../public/assets/products'
 type CardProps = {
     id: string;
     name: string;
-    price: string; //> current price
+	country?:string;
+    price?: number; //> current price
+	state?:string;
     brandName?: string;
-    pvp?: string; //> recommended price
+	brandId?:string;
+	manufacturerId?:string;
+	manufacturerName?:string;
     favorite?: boolean; //> favorite
     favoriteImg?: string;
     productIndex?: string;
-    categoryOne?: string; //> Skincare
-    categoryTwo?: string; //>Moisturizers
-    hasStock?: number;
-    discount?: number;
-    sales?: boolean;
-    saleType?: string; //>"BPC" (Buy-1-Get-1 Free), "Discount," "Special Offer,"
-    saleCountry?: string;
+    category?: string; //> Skincare
+    hasStock?: boolean;
     onSubmit?: () => void;
 };
 
 const Card: React.FC<CardProps> = ({
     id,
     name,
+	country,
+	state,
+	brandName,
+    brandId,
+	manufacturerId,
+	manufacturerName,
     price,
-    pvp,
-    brandName,
     favorite,
     favoriteImg,
     productIndex,
-    categoryOne,
-    categoryTwo,
+    category,
     hasStock,
-    discount,
-    sales,
-    saleType,
-    saleCountry,
     onSubmit,
 }) => {
     const [isFavorite, setIsFavorite] = useState(favorite);
