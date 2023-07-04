@@ -39,17 +39,18 @@ const Card: React.FC<CardProps> = ({
     saleCountry,
     onSubmit,
 }) => {
-    const [isFavorite, setIsFavorite] = useState(favorite || false);
+    const [isFavorite, setIsFavorite] = useState(favorite);
+
     const handleFavoriteClick = () => {
         setIsFavorite(!isFavorite);
     };
-    const favoriteIconClass = `favorite-icon ${isFavorite ? 'red' : ''}`;
 
     return (
-        <div className="bg-gray-300 flex flex-row relative rounded-[5px] ">
-            <div className={favoriteIconClass} onClick={handleFavoriteClick}>
-                <FaHeart size={20} />
-            </div>
+        <div className="relative">
+            <FaHeart
+                className={`favorite-icon ${isFavorite ? 'favorite-icon--active' : ''}`}
+                onClick={handleFavoriteClick}
+            />
             <div>
                 <h2>{name}</h2>
                 <p>{price}</p>
@@ -57,5 +58,4 @@ const Card: React.FC<CardProps> = ({
         </div>
     );
 };
-
 export default Card;
