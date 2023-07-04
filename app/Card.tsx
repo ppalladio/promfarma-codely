@@ -2,54 +2,53 @@
 
 import { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
-type CardProps = {
+interface CardProps = {
     id: string;
-    name: string;
-    price: string; //> current price
+    name: string | null;
+	country?:string;
+    price?: number; //> current price
+	state?:string;
     brandName?: string;
-    pvp?: string; //> recommended price
+	brandId?:string;
+	manufacturerId?:string;
+	manufacturerName?:string;
     favorite?: boolean; //> favorite
     favoriteImg?: string;
     productIndex?: string;
-    categoryOne?: string; //> Skincare
-    categoryTwo?: string; //>Moisturizers
-    hasStock?: number;
-    discount?: number;
-    sales?: boolean;
-    saleType?: string; //>"BPC" (Buy-1-Get-1 Free), "Discount," "Special Offer,"
-    saleCountry?: string;
+    category?: string; //> Skincare
+    hasStock?: boolean;
     onSubmit?: () => void;
 };
 
 const Card: React.FC<CardProps> = ({
     id,
     name,
+	country,
+	state,
+	brandName,
+    brandId,
+	manufacturerId,
+	manufacturerName,
     price,
-    pvp,
-    brandName,
     favorite,
     favoriteImg,
     productIndex,
-    categoryOne,
-    categoryTwo,
+    category,
     hasStock,
-    discount,
-    sales,
-    saleType,
-    saleCountry,
     onSubmit,
 }) => {
-    const [isFavorite, setIsFavorite] = useState(favorite || false);
+    const [isFavorite, setIsFavorite] = useState(favorite);
+
     const handleFavoriteClick = () => {
         setIsFavorite(!isFavorite);
     };
-    const favoriteIconClass = `favorite-icon ${isFavorite ? 'red' : ''}`;
 
     return (
-        <div className="bg-gray-300 flex flex-row relative rounded-[5px] ">
-            <div className={favoriteIconClass} onClick={handleFavoriteClick}>
-                <FaHeart size={20} />
-            </div>
+        <div className="relative">
+            <FaHeart
+                className={`favorite-icon ${isFavorite ? 'favorite-icon--active' : ''}`}
+                onClick={handleFavoriteClick}
+            />
             <div>
                 <h2>{name}</h2>
                 <p>{price}</p>
@@ -57,5 +56,4 @@ const Card: React.FC<CardProps> = ({
         </div>
     );
 };
-
 export default Card;
