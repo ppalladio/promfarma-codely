@@ -1,7 +1,9 @@
-import Image from 'next/image'
+import Main from './Pages/main/main';
 
 export default function Home() {
   return (
-	<div className='capitalize'> promofarma</div>
-  )
+    <div className='capitalize'>
+      <Main />
+    </div>
+  );
 }
