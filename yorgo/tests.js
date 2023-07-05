@@ -1,6 +1,17 @@
 const axios = require('axios');
 const fs = require('fs');
 
+
+// {
+//   __schema {
+//     queryType {
+//       fields {
+//         name
+//       }
+//     }
+//   }
+// }
+
 async function searchProducts() {
   const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
 
