@@ -1,3 +1,4 @@
+
 import React from 'react';
 import 'app/App.css';
 import GeoLocation from './Components/GeoLocation/GeoLocation';
@@ -24,6 +25,7 @@ function App() {
       </div>
     </>
   );
+
 }
 
 export default App;
