@@ -10,14 +10,14 @@ interface Price {
 }
 const ProductList = () => {
     return (
-        <div>
+        <div className='flex flex-row flex-wrap my-3'>
             {products.map((product) => {
                 const price = product.recommended_prices.find(
                     (price) => price.country === 'ES',
                 ); //@in case price ES does not exist
 
                 return (
-                    <div key={product.product_id}>
+                    <div className='flex flex-row w-auto' key={product.product_id}>
                         <Card
                             id={product.product_id}
                             name={product?.name ?? ''}

@@ -46,9 +46,9 @@ const Card: React.FC<CardProps> = ({
     };
 
     return (
-        <div className="relative flex flex-row p-[3px] flex-wrap max-w-[400px] items-center justify-center">
+        <div className="relative flex flex-wrap flex-col p-3 sm:p-4 my-2 bg-gray-200 ">
             <FaHeart
-                className={`favorite-icon ${isFavorite ? 'favorite-icon--active' : ''}`}
+                className={` favorite-icon ${isFavorite ? 'favorite-icon--active' : ''}`}
                 onClick={handleFavoriteClick}
             />
             <div>
