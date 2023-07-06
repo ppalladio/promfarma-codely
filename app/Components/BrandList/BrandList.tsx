@@ -3,10 +3,27 @@ import React from 'react';
 
 import { category, manufacturerName, brandName } from '../Constants/info.ts';
 
-const keys = Object.keys(category);
-// const key = keys[0];
+const valuesC = Object.values(category);
+const valuesM = Object.values(manufacturerName);
+// const valuesB = Object.values(brandName);
 
-// const yorgo = category
+const BrandList = () => {
+    return (
+        <div>
+			<p >Categories</p>
+			<p >{valuesC}</p>
+			<p ></p>
+			<p >Manufacturers</p>
+			<p >{valuesM}</p>
+			<p ></p>
+			{/* <p >Brands</p>
+			<p >{valuesB}</p> */}
+		</div>
+    );
+};
+
+export default BrandList;
+
 
 			{/* const container = document.getElementById('container');
 
@@ -16,10 +33,6 @@ const keys = Object.keys(category);
 				container.appendChild(element);
 			}); */}
 
-const BrandList = () => {
-    return (
-        <div>
-			{keys}
 			{/* {keys.map((key) => {
 				const kk = key
 				return (
@@ -27,9 +40,3 @@ const BrandList = () => {
 				)
 				}
 			)} */}
-
-		</div>    
-    );
-};
-
-export default BrandList;

@@ -16,12 +16,6 @@ async function searchProducts() {
         query: `
           query SearchProducts($size: Int, $page: Int) {
             response: searchProducts(
-            # productHasStock: null 
-            # productState: null 
-            # product_id: "c1e8d218-8a47-4064-ab95-a59cb6356a5c"
-            # productName: "Heliocare"
-            # categoryIds: ["f6738502-b893-4fed-9cf1-75d85f3b34c7"]
-            # brandIds: ["fdff0064-6a42-441d-a565-5b74f8274d91"]
               productHasStock: true
               productState: "enabled"
               size: $size
@@ -79,18 +73,8 @@ async function searchProducts() {
       // Increment the page number for the next request
       page++;
     }
-    
-    
-
-// 	fs.writeFileSync('response.json', JSON.stringify(allProducts));
-//     console.log('Response saved to response.json');
-
-
-// 	console.log(allProducts);
-//     const responseData = response.data.data.response;
 
  	const mainCategoryDict = {};
-// 	
 
 	allProducts.forEach((item) => {
 
@@ -104,13 +88,10 @@ async function searchProducts() {
 
 	});
 
-		
-	
 // 	console.log(mainCategoryDict);
-
 //     console.log('Total products:', totalProducts);
 //     console.log('All products:', allProducts);
-    
+
   } catch (error) {
     console.error('Error:', error);
   }
@@ -118,3 +99,20 @@ async function searchProducts() {
 
 // Call the function to search for products
 searchProducts();
+
+// TOOLS
+// API FILTERS
+// # productHasStock: null 
+// # productState: null 
+// # product_id: "c1e8d218-8a47-4064-ab95-a59cb6356a5c"
+// # productName: "Heliocare"
+// # categoryIds: ["f6738502-b893-4fed-9cf1-75d85f3b34c7"]
+// # brandIds: ["fdff0064-6a42-441d-a565-5b74f8274d91"]
+//
+// Save the response to 'response.json'
+// 	fs.writeFileSync('response.json', JSON.stringify(allProducts));
+//     console.log('Response saved to response.json');
+//
+// Save response in a variable 'responseData'
+// 	console.log(allProducts);
+//     const responseData = response.data.data.response;  

@@ -43,24 +43,20 @@ async function searchProducts() {
     })
 
     const responseData = response.data.data.response;
-//     const responseData = response.data.data.response;
     
     const products = responseData.products;
 //     console.log(products);
 	const mainCategoryDict = {};
 	
-	products.forEach((item) => {
+	products.forEach((item) => {{
 		const mainCategory = item.main_category;
 		mainCategoryDict[mainCategory.category_id] = mainCategory.category_name;
-	});
-	
-	console.log(mainCategoryDict);
-		
-	fs.writeFileSync('response.json', JSON.stringify(responseData));
-//     console.log('Response saved to response.json', responseData);
-//     	console.log(responseData);
-	
-	
+	}});
+
+  const category = Object.values(mainCategoryDict).map(value => ({ name: value }));
+
+	fs.writeFileSync('response.ts', JSON.stringify(category));
+    console.log('Response saved to response.json');
     
   } catch (error) {
     console.error('Error:', error);
@@ -69,3 +65,6 @@ async function searchProducts() {
 
 // Call the function to search for products
 searchProducts();
+
+export default category;
+
