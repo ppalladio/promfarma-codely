@@ -1,1 +1,0 @@
-https://tidb-prisma-vercel-demo.vercel.app/
