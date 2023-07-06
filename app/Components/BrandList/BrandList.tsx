@@ -10,7 +10,7 @@ const BrandList = () => {
         <div>
 			<h2 >Brands:</h2>
 			{valuesB.map((value, index) => (
-                <p key={index}>&emsp;· {value}</p>
+                <p >&emsp;{index}: {value} </p>
             ))}
 		</div>
     );
