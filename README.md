@@ -11,6 +11,7 @@ yarn dev
 # or
 pnpm dev
 ```
+If you get an error you can try "npm i" to install the dependencies
 
 Open [http://localhost:8080](http://localhost:8080) with your browser to see the result.
 
