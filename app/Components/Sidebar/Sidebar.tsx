@@ -4,7 +4,7 @@ type Props = {}
 
 const Sidebar = (props: Props) => {
   return (
-	<div className='flex flex-col w-1/4 bg-gray-200 mx-[20px] justify-between items-center '>Sidebar</div>
+	<div className='flex flex-col flex-wrap w-1/6 bg-gray-200 mx-[20px] justify-between items-center '>Sidebarcomps</div>
   )
 }
 

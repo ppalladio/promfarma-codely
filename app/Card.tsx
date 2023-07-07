@@ -18,6 +18,7 @@ interface CardProps  {
     productIndex?: string;
     category?: string; //> Skincare
     hasStock?: boolean;
+	className?: string;
     // onSubmit?: () => void;
 };
 
@@ -37,6 +38,8 @@ const Card: React.FC<CardProps> = ({
     productIndex,
     category,
     hasStock,
+
+	className
     // onSubmit,
 }) => {
     const [isFavorite, setIsFavorite] = useState(favorite);
@@ -46,9 +49,9 @@ const Card: React.FC<CardProps> = ({
     };
 
     return (
-        <div className="relative flex flex-wrap flex-col rounded-[5px]  p-3 sm:p-1 my-2 bg-gray-200 cursor-default ">
+        <div className="relative flex flex-wrap flex-col rounded-[5px] h-[1000px]  p-3 sm:p-1 my-2 bg-gray-200 cursor-default ">
             <FaHeart
-                className={` favorite-icon ${isFavorite ? 'favorite-icon--active' : ''}`}
+                className={`favorite-icon ${isFavorite ? 'favorite-icon--active' : ''}`}
                 onClick={handleFavoriteClick}
             />
             <div className=' bg-slate-100 rounded-tr-[12px]'>
