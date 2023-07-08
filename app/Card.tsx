@@ -49,16 +49,16 @@ const Card: React.FC<CardProps> = ({
     };
 
     return (
-        <div className="relative flex flex-wrap flex-col rounded-[5px] h-[1000px]  p-3 sm:p-1 my-2 bg-gray-200 cursor-default ">
+        <div className="relative flex flex-wrap flex-col rounded-[5px] h-[360px] p-3 sm:p-1 my-2 cursor-default ">
             <FaHeart
                 className={`favorite-icon ${isFavorite ? 'favorite-icon--active' : ''}`}
                 onClick={handleFavoriteClick}
             />
-            <div className=' bg-slate-100 rounded-tr-[12px]'>
+            <div className='flex flex-col justify-between items-center h-[300px] bg-dark_gray rounded-tr-[12px]'>
 				<hr />
-                <h2 className='text-lg text-black capitalize text-center pt-3 '>{name}</h2>
+                <h2 className='text-lg text-black  text-center pt-3 '>{name}</h2>
                 <p>{price}</p>
-				<p>{brandName}</p>
+				<p className=''>{brandName}</p>
 				<hr />
             </div>
         </div>
