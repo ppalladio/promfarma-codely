@@ -8,7 +8,6 @@ const CategoryList = () => {
     return (
         <div>
         	<h2 >Categories:</h2>
-                {/* {category2} */}
         	{values2.map((value, index) => (
 				<p >&emsp;{index}: {value}</p>
             ))}

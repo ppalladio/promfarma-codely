@@ -1,7 +1,11 @@
+import React from 'react';
 const axios = require('axios');
 const fs = require('fs');
 
-async function searchProducts() {
+const mainCategoryDict = {};
+// const mainCategoryDict = [];
+
+async function searchProducts(mainCategoryDict) {
   const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
   const pageSize = 14; // Number of products to fetch per request
   let totalProducts = 0;
@@ -74,8 +78,6 @@ async function searchProducts() {
       page++;
     }
 
- 	const mainCategoryDict = {};
-
 	allProducts.forEach((item) => {
 
 		const mainCategory = item.manufacturer;
@@ -83,22 +85,31 @@ async function searchProducts() {
 		const idz = mainCategory.manufacturer_id;
 		const namez = mainCategory.manufacturer_name; 
  		mainCategoryDict[idz] = namez;
-		console.log(mainCategoryDict);
+    //  mainCategoryDict.push(category_name);
 
 
 	});
 
-// 	console.log(mainCategoryDict);
-//     console.log('Total products:', totalProducts);
-//     console.log('All products:', allProducts);
-
   } catch (error) {
     console.error('Error:', error);
   }
+
+// fs.writeFileSync('response.ts', JSON.stringify(mainCategoryDict));
+//     console.log('Response saved to response.ts');
+
+return (mainCategoryDict);
 }
 
 // Call the function to search for products
-searchProducts();
+const CategoryDictionary = searchProducts(mainCategoryDict);
+// export default mainCategoryDict;
+// export default CategoryDictionary;
+
+export const manufacturerData = CategoryDictionary;
+
+
+
+
 
 // TOOLS
 // API FILTERS
