@@ -16,8 +16,6 @@ function GeoLocation() {
         <div >
             <h1>Current Location is: {currLocation.country} </h1>
             <p >City: {currLocation.city}</p>
-            {/* <p >Latitude: {currLocation.latitude}</p>
-            {/* <p >IP: {currLocation.ip}</p> */}
         </div>
     );
 }

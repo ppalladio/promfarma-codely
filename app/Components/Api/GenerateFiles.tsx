@@ -1,5 +1,5 @@
-import React from 'react';
 const axios = require('axios');
+// import fs from 'fs';
 const fs = require('fs');
 
 // Category Dictionary & Array
@@ -15,8 +15,8 @@ const manufacturerDict = {};
 const manufacturerArray = [];
 
 // Product Dictionary & Array
-const productDict = {};
-// const productArray = [];
+// const productDict = {};
+const productArray = [];
 
 async function searchProducts(categoryDict) {
   const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
@@ -94,23 +94,23 @@ async function searchProducts(categoryDict) {
 	allProducts.forEach((item) => {
 
     // Setup Category Dictionary & Array
-		const mainCategory = item.main_category;
-		const category_idz = mainCategory.category_id;
-		const category_namez = mainCategory.category_name; 
+	const mainCategory = item.main_category;
+	const category_idz = mainCategory.category_id;
+	const category_namez = mainCategory.category_name; 
     categoryDict[category_idz] = category_namez;
     categoryArray.push(category_namez);
 
     // Setup Brands Dictionary & Array
-		const brandsList = item.brand;
-		const brand_idz = brandsList.brand_id;
-		const namez = brandsList.name; 
+	const brandsList = item.brand;
+	const brand_idz = brandsList.brand_id;
+	const namez = brandsList.name; 
     brandsDict[brand_idz] = namez;
     brandsArray.push(namez);
 
     // Setup Manufacturer Dictionary & Array
-		const manufacturerList = item.manufacturer;
-		const manufacturer_idz = manufacturerList.manufacturer_id;
-		const manufacturer_namez = manufacturerList.manufacturer_name; 
+	const manufacturerList = item.manufacturer;
+	const manufacturer_idz = manufacturerList.manufacturer_id;
+	const manufacturer_namez = manufacturerList.manufacturer_name; 
     manufacturerDict[manufacturer_idz] = manufacturer_namez;
     manufacturerArray.push(manufacturer_namez);
   
@@ -122,7 +122,24 @@ async function searchProducts(categoryDict) {
     const productState = productList.product_state;
     const productHasStock = productList.has_stock;
     // const productRecomendedPriceES = productList.recommended_prices[0]
-    productDict[['ProductID: ', productId]] = [{'name' : productName, 'Updated': productUpdated, 'State': productState, 'Stock':productHasStock,}];
+    // productDict['product_id'] = productId;
+    // productDict[name] = productName;
+	// productArray.push({`1`: productId})
+	
+	var obj = {};
+	obj.product_idz = productId;
+	obj.updated_at = productUpdated;
+	obj.productName = productName;
+	obj.productState = productState;
+	obj.productHasStock = productHasStock;
+  obj.productBrandId = brand_idz;
+  obj.productBrandName = namez;
+  obj.manufacturerId = manufacturer_idz;
+  obj.manufacturerName = manufacturer_namez;
+  obj.categoryId = category_idz;
+  obj.categoryName = category_namez;
+	productArray.push(obj);
+	// Id={product.brand.brand_id}
 	});
 
   } catch (error) {
@@ -140,8 +157,7 @@ async function searchProducts(categoryDict) {
   const fz = require('fs');
 
 
-  // categoryDict
-
+  // Create category.ts
   const fileContent = `interface propsCodeName<String> {
     [key: string]: string;
   }
@@ -150,23 +166,76 @@ async function searchProducts(categoryDict) {
 
   `;
 
-  // fs.writeFile('output.js', fileContent, (err) => {
-  //   if (err) {
-  //       console.error('Error writing file:', err);
-  //   } else {
-  //       console.log('File saved successfully!');
-  //   }
-  // });
+  fs.writeFile('category.ts', fileContent, (err) => {
+    if (err) {
+        console.error('Error writing file:', err);
+    } else {
+        console.log('File saved successfully: category.ts');
+    }
+  });
   
-  return (fileContent);
+  // Create brands.ts
+  const fileContent2 = `interface propsCodeName<String> {
+    [key: string]: string;
+  }
+
+  export const brandName: propsCodeName<String> = ${JSON.stringify(brandsDict, null, 4)};
+
+  `;
+
+  fs.writeFile('brands.ts', fileContent2, (err) => {
+    if (err) {
+        console.error('Error writing file:', err);
+    } else {
+        console.log('File saved successfully: brands.ts');
+    }
+  });
+  
+  // Create products.ts
+//   const fileContent3 = `export const products = ${JSON.stringify(productArray, null, 4)};
+
+//   `;
+
+	// { product_idz: "${item.product_idz}" },`).join('\n')}
+	// 	];
+	// 	`;
+  
+  const fileContent3 = `export const products = [
+	${productArray.map((item) => `
+	{
+		product_id: "${item.product_idz}",
+		updated_at: "${item.productUpdated}",
+		name: "${item.productName}",
+		product_state: "${item.productState}",
+		has_stock: "${item.productHasStock}",
+		brand: {
+			brad_id: "${item.productBrandId}",
+			brad_name: "${item.productBrandName}",
+		},
+		manufacturer: {
+			manufacturer_id: "${item.manufacturerId}",
+			manufacturer_name: "${item.manufacturerName}",
+		},
+		main_category: {
+			category_id: "${item.categoryId}",
+			category_name: "${item.categoryName}",
+		},
+	}`)},
+	];
+	`;
+	
+  fs.writeFile('products.ts', fileContent3, (err) => {
+    if (err) {
+        console.error('Error writing file:', err);
+    } else {
+        console.log('File saved successfully: products.ts');
+    }
+  });
+
+  return (categoryDict);
 }
 
 // Call the function to search for products
 const CategoryDictionary = searchProducts(categoryDict);
 
-export default CategoryDictionary;
-
-
-
-	// fs.writeFileSync('response.ts', JSON.stringify(category2));
-  //   console.log('Response saved to response.ts');
+// export default CategoryDictionary;

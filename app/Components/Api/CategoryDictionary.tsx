@@ -64,3 +64,5 @@ async function searchProducts() {
 const CategoryDictionary = searchProducts;
 
 export default CategoryDictionary;
+
+
