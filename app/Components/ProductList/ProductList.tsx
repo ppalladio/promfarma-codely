@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import Card from '@/app/Card';
 import { products } from '../Constants/products';
@@ -12,8 +12,14 @@ const ProductList: React.FC = () => {
 
     // Filter products with prices
     const pricedProducts = products.filter((product) => {
-        const price = product.recommended_prices.find((price) => price.country === 'ES');
-        return price && price.amount !== undefined && product.recommended_prices.length > 0; // Return true for products with available prices
+        const price = product.recommended_prices.find(
+            (price) => price.country === 'ES',
+        );
+        return (
+            price &&
+            price.amount !== undefined &&
+            product.recommended_prices.length > 0
+        ); // Return true for products with available prices
     });
 
     const totalPages = Math.ceil(pricedProducts.length / ITEMS_PER_PAGE);
@@ -31,20 +37,30 @@ const ProductList: React.FC = () => {
         <div className="flex flex-wrap my-3">
             {displayedProducts.length > 0 ? (
                 displayedProducts.map((product) => {
-                    const price = product.recommended_prices.find((price) => price.country === 'ES');
-                    const country = price?.country; // Find the country within the recommended_prices array
+                    const price = product.recommended_prices.find(
+                        (price) => price.country === 'ES',
+                    );
                     return (
-                        <div className="w-full sm:w-1/2 lg:w-1/4 p-2" key={product.product_id}>
+                        <div
+                            className="w-full sm:w-1/2 lg:w-1/4 p-2"
+                            key={product.product_id}
+                        >
                             <Card
                                 id={product.product_id}
                                 name={product?.name ?? ''}
-                                country={country}
+                                country={price?.country}
                                 price={price?.amount}
                                 state={product.product_state}
                                 brandId={product.brand.brand_id}
                                 brandName={brandName[product.brand.brand_id]}
-                                manufacturerId={manufacturerName[product.manufacturer.manufacturer_id]}
-                                manufacturerName={product.manufacturer.manufacturer_name}
+                                manufacturerId={
+                                    manufacturerName[
+                                        product.manufacturer.manufacturer_id
+                                    ]
+                                }
+                                manufacturerName={
+                                    product.manufacturer.manufacturer_name
+                                }
                                 favorite={false} // Set your favorite logic here
                                 favoriteImg={''} // Set the favorite image URL if needed
                                 productIndex={''} // Set the product index if needed
