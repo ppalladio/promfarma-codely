@@ -1,33 +1,81 @@
-'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@/app/Card';
 import { products } from '../Constants/products';
 import { category, manufacturerName, brandName } from '../Constants/info.ts';
 import Pagination from '../Main/Pagination';
 
+interface Product {
+    product_id: string;
+    updated_at: string;
+    name: string;
+    product_state: string;
+    has_stock: boolean;
+    recommended_prices: {
+        amount: number;
+        currency: string;
+        country: string;
+    }[];
+    manufacturer: {
+        manufacturer_id: string;
+        manufacturer_name: string;
+    };
+    brand: {
+        brand_id: string;
+    };
+    main_category: {
+        category_id: string;
+    };
+}
+
+interface ProductListProps {
+    selectedCategories: string[];
+    selectedBrands: string[];
+}
+
 const ITEMS_PER_PAGE = 8; // Number of items to display per page
 
-const ProductList: React.FC = () => {
+const ProductList: React.FC<ProductListProps> = ({
+    selectedCategories,
+    selectedBrands,
+}) => {
     const [currentPage, setCurrentPage] = useState(1);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
-    // Filter products with prices
-    const pricedProducts = products.filter((product) => {
-        const price = product.recommended_prices.find(
-            (price) => price.country === 'ES',
-        );
-        return (
-            price &&
-            price.amount !== undefined &&
-            product.recommended_prices.length > 0
-        ); // Return true for products with available prices
-    });
+    useEffect(() => {
+        const filtered = products.filter((product) => {
+            const price = product.recommended_prices.find(
+                (price) => price.country === 'ES',
+            );
+            const categoryMatch =
+                selectedCategories.length === 0 ||
+                (product.main_category &&
+                    selectedCategories.includes(
+                        product.main_category.category_id,
+                    ));
 
-    const totalPages = Math.ceil(pricedProducts.length / ITEMS_PER_PAGE);
+            const brandMatch =
+                selectedBrands.length === 0 ||
+                selectedBrands.includes(product.brand.brand_id);
+
+            return (
+                price &&
+                price.amount !== undefined &&
+                product.recommended_prices.length > 0 &&
+                categoryMatch &&
+                brandMatch
+            );
+        });
+
+        setFilteredProducts(filtered as Product[]);
+        setCurrentPage(1); // Reset to the first page when filters change
+    }, [selectedCategories, selectedBrands]);
+
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
 
-    const displayedProducts = pricedProducts.slice(startIndex, endIndex);
+    const displayedProducts = filteredProducts.slice(startIndex, endIndex);
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -54,12 +102,12 @@ const ProductList: React.FC = () => {
                                 brandId={product.brand.brand_id}
                                 brandName={brandName[product.brand.brand_id]}
                                 manufacturerId={
+                                    product.manufacturer.manufacturer_id
+                                }
+                                manufacturerName={
                                     manufacturerName[
                                         product.manufacturer.manufacturer_id
                                     ]
-                                }
-                                manufacturerName={
-                                    product.manufacturer.manufacturer_name
                                 }
                                 favorite={false} // Set your favorite logic here
                                 favoriteImg={''} // Set the favorite image URL if needed
@@ -72,12 +120,13 @@ const ProductList: React.FC = () => {
             ) : (
                 <p>No products with prices available.</p>
             )}
-
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-            />
+            <div className=''>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
+            </div>
         </div>
     );
 };

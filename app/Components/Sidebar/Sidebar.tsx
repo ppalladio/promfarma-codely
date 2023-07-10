@@ -1,46 +1,56 @@
-"use client"
+import React from 'react';
+import { category, brandName } from '../Constants/info.ts';
 
-import React, { useState } from 'react';
-import './Sidebar.css';
-
-interface Category {
-  id: number;
-  name: string;
+interface SidebarProps {
+  selectedCategories: string[];
+  selectedBrands: string[];
+  onCategoryToggle: (categoryId: string) => void;
+  onBrandToggle: (brandId: string) => void;
 }
 
-const categories: Category[] = [
-  { id: 1, name: 'Categoria' },
-  { id: 2, name: 'Categoria' },
-  { id: 3, name: 'Categoria' },
-  { id: 4, name: 'Categoria' },
-  { id: 5, name: 'Categoria' },
-  { id: 6, name: 'Categoria' },
-];
+const Sidebar: React.FC<SidebarProps> = ({
+  selectedCategories,
+  selectedBrands,
+  onCategoryToggle,
+  onBrandToggle,
+}) => {
+  const handleCategoryToggle = (categoryId: string) => {
+    onCategoryToggle(categoryId);
+  };
 
-const Sidebar: React.FC = () => {
-  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
-
-  const handleCategoryToggle = (categoryId: number) => {
-    if (selectedCategories.includes(categoryId)) {
-      setSelectedCategories(selectedCategories.filter(id => id !== categoryId));
-    } else {
-      setSelectedCategories([...selectedCategories, categoryId]);
-    }
+  const handleBrandToggle = (brandId: string) => {
+    onBrandToggle(brandId);
   };
 
   return (
-    <div className="sidebar">
+    <div className="flex flex-col leading-[20px]">
       <h2>Categories</h2>
       <ul>
-        {categories.map(category => (
-          <li key={category.id}>
+        {Object.entries(category).map(([categoryId, categoryName]) => (
+          <li key={categoryId}>
             <label>
               <input
                 type="checkbox"
-                checked={selectedCategories.includes(category.id)}
-                onChange={() => handleCategoryToggle(category.id)}
+                checked={selectedCategories.includes(categoryId)}
+                onChange={() => handleCategoryToggle(categoryId)}
               />
-              {category.name}
+              {categoryName}
+            </label>
+          </li>
+        ))}
+      </ul>
+
+      <h2>Brands</h2>
+      <ul>
+        {Object.entries(brandName).map(([brandId, brand]) => (
+          <li key={brandId}>
+            <label>
+              <input
+                type="checkbox"
+                checked={selectedBrands.includes(brandId)}
+                onChange={() => handleBrandToggle(brandId)}
+              />
+              {brand}
             </label>
           </li>
         ))}
