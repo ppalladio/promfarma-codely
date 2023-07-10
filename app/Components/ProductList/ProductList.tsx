@@ -43,7 +43,6 @@ const ProductList = () => {
                             //     category[product.main_category!.category_id]
                             // } //! category can be null
                             hasStock={product.has_stock}
-                          
                         />
                     </div>
                 );
