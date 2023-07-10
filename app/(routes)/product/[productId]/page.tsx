@@ -1,47 +1,48 @@
 'use client';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { useParams } from 'next/navigation';
 import { products } from '@/app/Components/Constants/products';
 
-
 interface ProductPageProps {
-    name: string;
-    brand: ReactNode;
-    price: number;
-    description: string;
-    manufacturer: string;
-    hasStock?: boolean;
+  name: string;
+  brand: string;
+  price: number;
+  category: string;
+  description: string;
+  manufacturer: string;
+  hasStock?: boolean;
 }
 
-
 const ProductPage: React.FC<ProductPageProps> = () => {
-    const { ...param } = useParams();
+  const { ...param } = useParams();
 
-    console.log(param);
-    const id = param.productId;
-    console.log(id);
+  console.log(param);
+  const id = param.productId;
+  console.log(id);
 
-	
-    // Find the product with the matching ID
-    const product = products.find((product) => product.product_id === id);
+  // Find the product with the matching ID
+  const product = products.find((product) => product.product_id === id);
 
-    if (!product) {
-        return <div>Product not found</div>;
-    }
+  if (!product) {
+    return <div>Product not found</div>;
+  }
 
-    const { name, brand, price, description, manufacturer, hasStock } = product;
+  const { name, recommended_prices, manufacturer, brand, main_category } = product;
+  const price = recommended_prices[0]?.amount;
+  const category = main_category?.category_name;
+  const manufacturerName = manufacturer?.manufacturer_name;
+  const brandName = brand?.name;
 
+  return (
+    <div>
+      <h1>{name}</h1>
+      <p>Price: {price}</p>
+      <p>Manufacturer: {manufacturerName}</p>
+      <p>Category: {category}</p>
+      <p>Brand: {brandName}</p>
 
-    return (
-        <div>
-            <h1>{name}</h1>
-			<p>Brand: {brand}</p>
-            <p>Price: {price}</p>
-            <p>Description: {description}</p>
-            <p>Manufacturer: {manufacturer}</p>
-            <p>Available: {hasStock ? 'Yes' : 'No'}</p>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default ProductPage;

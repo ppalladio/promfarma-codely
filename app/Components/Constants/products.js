@@ -1,5 +1,4 @@
 export const products = [
-   
     {
         product_id: 'ffcb7003-916b-4006-99d3-ad517385cf2f',
         updated_at: '2023-07-04 04:46:33',
