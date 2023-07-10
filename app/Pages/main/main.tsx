@@ -1,13 +1,14 @@
 import React from 'react';
 import './main.css';
 import Header from '../../Components/Header/Header';
+import Sidebar from '../../Components/Sidebar/Sidebar'
 
-import { useRouter } from 'next/router';
 
 const Main = () => {
   return (
     <>
       <Header />
+      <Sidebar />
     </>
   );
 };
