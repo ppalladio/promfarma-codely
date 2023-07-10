@@ -15,7 +15,6 @@ const categories: Category[] = [
   { id: 4, name: 'Categoria' },
   { id: 5, name: 'Categoria' },
   { id: 6, name: 'Categoria' },
-  // Add more categories if needed
 ];
 
 const Sidebar: React.FC = () => {
