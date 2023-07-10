@@ -64,10 +64,13 @@ const Card: React.FC<CardProps> = ({
                 />
                 <div className="card">
                     <hr />
-                    <h2 className="text-lg text-black  text-center pt-3 ">
+                    <h2 className="font-[400] text-black text-center pt-3 mx-2">
                         {name}
                     </h2>
-                    <p>{price}</p>
+					<div>
+
+                    <span className='font-[700] text-lg'>{price} €</span>
+					</div>
                     <p className="">{brandName}</p>
 					
                     <hr />

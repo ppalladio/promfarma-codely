@@ -120,7 +120,7 @@ const ProductList: React.FC<ProductListProps> = ({
             ) : (
                 <p>No products with prices available.</p>
             )}
-            <div className=''>
+            <div className='w-full'>
                 <Pagination
                     currentPage={currentPage}
                     totalPages={totalPages}
