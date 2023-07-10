@@ -1,19 +1,33 @@
-import Card from '@/app/Card';
 import React from 'react';
-// import { category } from '../Constants/info.ts';
-import { category } from '../Api/category.ts';
-
-const categoryValues = Object.values(category);
+import useProductList from '../Api/fetchCategoryData';
 
 const CategoryList = () => {
-    return (
-        <div>
-        	<h2 >Categories:</h2>
-        	{categoryValues.map((value, index) => (
-				    <p >&emsp;{index}: {value}</p>
-          ))}
-		</div>
-    );
+  const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
+  const pageSize = 14;
+
+  const products = useProductList(apiUrl, pageSize);
+
+  return (
+    <div>
+      <h1>Product Category</h1>
+      {products.map((product) => (
+        <div key={product.name}>
+          {product.main_category ? (
+            <ul>
+              {Object.entries(product.main_category).map(([key, value]) => (
+                <li key={key}>
+                  <strong>{key}: </strong>
+                  {value}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No main category available.</p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default CategoryList;
