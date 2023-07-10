@@ -1,41 +1,9 @@
-'use client'
-import 'app/App.css';
-import React from 'react';
-import GeoLocation from './Components/GeoLocation/GeoLocation';
-import BrandList from './Components/BrandList/newBrandList';
-import CategoryList from './Components/CategoryList/newCategoryList';
-import ProductList from './Components/ProductList/newProductList';
-import ManufacturerList from './Components/ManufacturerList/newManufacturerList';
-import SideBar from './Components/Sidebar/Sidebar';
-import ToggledTags from '../Sidebar/ToggleTags';
+import Main from './Components/Main/Main';
 
-// LATER
-// import ProductList from './Components/ProductList/ProductList';
-// import ManufacturerList from './Components/ManufacturerList/ManufacturerList';
-// import BrandList from './Components/BrandList/BrandList';
-
-function App() { 
+export default function Home() {
   return (
-      <>
-        <div>
-            {/* <GeoLocation /><br /> */}
-        </div>
-        <div style={{float: 'left',}}>
-            {/* <BrandList /><br /> */}
-        </div>
-        <div style={{float: 'left',}}>
-            {/* <ManufacturerList /><br /> */}
-        </div>
-        <div>
-              {/* <CategoryList /><br /> */}
-        </div>
-        <div>
-              {/* <ProductList/> */}
-              <SideBar />
-              
-        </div>
-      </>
+    <div className='capitalize'>
+      <Main />
+    </div>
   );
 }
-
-export default App;
