@@ -40,7 +40,6 @@ const Card: React.FC<CardProps> = ({
     productIndex,
     category,
     hasStock,
-
     className,
     // onSubmit,
 }) => {
@@ -70,6 +69,7 @@ const Card: React.FC<CardProps> = ({
                     </h2>
                     <p>{price}</p>
                     <p className="">{brandName}</p>
+					
                     <hr />
                 </div>
             </div>

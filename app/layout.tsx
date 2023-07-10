@@ -1,5 +1,8 @@
 import './globals.css';
 import { Poppins } from 'next/font/google';
+import ClientOnly from './Components/ClientOnly';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
 
 const font = Poppins({
     subsets: ['latin'],
@@ -18,7 +21,13 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={font.className}>{children}</body>
+            <body className={font.className}>
+                <ClientOnly>
+                    <Header /> 
+                </ClientOnly>
+                <div className="pb-20 pt-28">{children}</div>
+				<Footer />
+            </body>
         </html>
     );
 }
