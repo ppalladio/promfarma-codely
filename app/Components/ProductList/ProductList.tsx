@@ -41,10 +41,12 @@ const ProductList: React.FC<ProductListProps> = ({
         };
         brand: {
             brand_id: string;
+            // New
             name: string;
         };
         main_category: {
             category_id: string;
+            // New
             category_name: string;
         };
     }
