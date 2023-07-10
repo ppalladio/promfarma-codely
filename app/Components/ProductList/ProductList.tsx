@@ -1,39 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Card from '@/app/Card';
-import { products } from '../Constants/products';
-import { category, manufacturerName, brandName } from '../Constants/info.ts';
 import Pagination from '../Main/Pagination';
+
+// New: Import for all: products, category, manufacturerName, brandName
 import useProductList from '../Api/fetchProductData';
 
-interface Product {
-    product_id: string;
-    updated_at: string;
-    name: string;
-    product_state: string;
-    has_stock: boolean;
-    recommended_prices: {
-        amount: number;
-        currency: string;
-        country: string;
-    }[];
-    manufacturer: {
-        manufacturer_id: string;
-        manufacturer_name: string;
-    };
-    brand: {
-        brand_id: string;
-    };
-    main_category: {
-        category_id: string;
-    };
-}
+// Old: Imports 
+// import { products } from '../Constants/products';
+// import { category, manufacturerName, brandName } from '../Constants/info.ts';
 
-interface ProductListProps {
-    selectedCategories: string[];
-    selectedBrands: string[];
-}
-
-const ITEMS_PER_PAGE = 8; // Number of items to display per page
+// New: const:
+const manufacturerName = {};
 
 const ProductList: React.FC<ProductListProps> = ({
     selectedCategories,
@@ -41,6 +18,43 @@ const ProductList: React.FC<ProductListProps> = ({
 }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+    // New: Fetch data from the API
+    const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
+    const pageSize = 14;
+    const products = useProductList(apiUrl, pageSize);
+    
+    interface Product {
+        product_id: string;
+        updated_at: string;
+        name: string;
+        product_state: string;
+        has_stock: boolean;
+        recommended_prices: {
+            amount: number;
+            currency: string;
+            country: string;
+        }[];
+        manufacturer: {
+            manufacturer_id: string;
+            manufacturer_name: string;
+        };
+        brand: {
+            brand_id: string;
+            name: string;
+        };
+        main_category: {
+            category_id: string;
+            category_name: string;
+        };
+    }
+
+    interface ProductListProps {
+        selectedCategories: string[];
+        selectedBrands: string[];
+    }
+
+    const ITEMS_PER_PAGE = 8; // Number of items to display per page
 
     useEffect(() => {
         const filtered = products.filter((product) => {
@@ -81,7 +95,6 @@ const ProductList: React.FC<ProductListProps> = ({
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
-
     return (
         <div className="flex flex-wrap my-3">
             {displayedProducts.length > 0 ? (
@@ -101,7 +114,9 @@ const ProductList: React.FC<ProductListProps> = ({
                                 price={price?.amount}
                                 state={product.product_state}
                                 brandId={product.brand.brand_id}
-                                brandName={brandName[product.brand.brand_id]}
+                                // Old connections
+                                // brandName={brandName[product.brand.brand_id]}
+                                brandName={product.brand.name}
                                 manufacturerId={
                                     product.manufacturer.manufacturer_id
                                 }
@@ -133,67 +148,3 @@ const ProductList: React.FC<ProductListProps> = ({
 };
 
 export default ProductList;
-
-
-
-
-// const ProductList = () => {
-//   const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
-//   const pageSize = 14;
-
-//   const products = useProductList(apiUrl, pageSize);
-
-//   return (
-//     <div>
-//       <h1>Product List</h1>
-//       {products.map((product) => (
-//         <div>
-//           <h2><b>Product Name:</b> {product.name}</h2>
-//           <h2><b>Product ID:</b> {product.product_id}</h2>
-//           <h2><b>Product updated_at:</b> {product.updated_at}</h2>
-//           <h2><b>Product Has Stock:</b> {product.has_stock}</h2>
-//           <h3><b>Product Brand:</b> {product.brand.name}</h3>
-//           <h3><b>Product Brand ID:</b> {product.brand.brand_id}</h3>
-//           <h3><b>Product State:</b> {product.product_state}</h3>
-//           <h3><b>Product Categories:</b></h3>
-//             <ul>
-//               {Object.entries(product.manufacturer).map(([key, value]) => (
-//                 <li key={key}>
-//                   <strong>{key}: </strong>
-//                   {value}
-//                 </li>
-//               ))}
-//             </ul>
-//           Main Category:
-//           {product.main_category ? (
-//             <ul>
-//               {Object.entries(product.main_category).map(([key, value]) => (
-//                 <li key={key}>
-//                   <strong>{key}: </strong>
-//                   {value}
-//                 </li>
-//               ))}
-//             </ul>
-//           ) : (
-//             <p>No main category available.</p>
-//           )}
-//           Recommended Prices:
-//           <ul>
-//             {product.recommended_prices.map((price, index) => (
-//               <li key={index}>
-//                 <strong>Amount: </strong>
-//                 {price.amount}
-//                 <br />
-//                 <strong>Currency: </strong>
-//                 {price.currency}
-//                 <br />
-//                 <strong>Country: </strong>
-//                 {price.country}
-//               </li>
-//             ))}
-//           </ul>
-//           <br />
-//           {/* <h3><b>Product Category:</b> {product.category.name}</h3> */}
-//           {/* <h3><b>Product Category:</b> {product.main_category.category_name}</h3> */}
-    //   ))}
-    // </div>
