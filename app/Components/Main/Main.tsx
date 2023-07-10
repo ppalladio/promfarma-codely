@@ -1,27 +1,40 @@
 'use client'
 import React, { useState } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
+import ToggledTags from '../Sidebar/ToggleTags';
 import ProductList from '../ProductList/ProductList';
+import { category,brandName } from '../Constants/info';
 
 const Main = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
 
   const handleCategoryToggle = (categoryId: string) => {
-    if (selectedCategories.includes(categoryId)) {
-      setSelectedCategories(selectedCategories.filter((id) => id !== categoryId));
+    const newSelectedCategories = [...selectedCategories];
+    const categoryIndex = newSelectedCategories.indexOf(categoryId);
+
+    if (categoryIndex !== -1) {
+      newSelectedCategories.splice(categoryIndex, 1);
     } else {
-      setSelectedCategories([...selectedCategories, categoryId]);
+      newSelectedCategories.push(categoryId);
     }
+
+    setSelectedCategories(newSelectedCategories);
   };
 
   const handleBrandToggle = (brandId: string) => {
-    if (selectedBrands.includes(brandId)) {
-      setSelectedBrands(selectedBrands.filter((id) => id !== brandId));
+    const newSelectedBrands = [...selectedBrands];
+    const brandIndex = newSelectedBrands.indexOf(brandId);
+
+    if (brandIndex !== -1) {
+      newSelectedBrands.splice(brandIndex, 1);
     } else {
-      setSelectedBrands([...selectedBrands, brandId]);
+      newSelectedBrands.push(brandId);
     }
+
+    setSelectedBrands(newSelectedBrands);
   };
+
 
   return (
     <section className="flex flex-row">
@@ -30,6 +43,14 @@ const Main = () => {
         selectedBrands={selectedBrands}
         onCategoryToggle={handleCategoryToggle}
         onBrandToggle={handleBrandToggle}
+      />
+      <ToggledTags
+    selectedCategories={selectedCategories}
+	selectedBrands={selectedBrands}
+	categoryNames={category}
+	brandNames={brandName}
+	onCategoryToggle={handleCategoryToggle}
+	onBrandToggle={handleBrandToggle}
       />
       <ProductList
         selectedCategories={selectedCategories}

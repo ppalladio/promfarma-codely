@@ -17,6 +17,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
     const { ...param } = useParams();
 
     console.log(param);
+
     const id = param.productId;
     console.log(id);
 
