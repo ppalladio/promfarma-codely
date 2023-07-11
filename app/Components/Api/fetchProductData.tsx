@@ -1,19 +1,45 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const useProductList = (apiUrl, pageSize) => {
-  const [products, setProducts] = useState([]);
+interface Product {
+    product_id: string;
+    updated_at: string;
+    name: string;
+    product_state: string;
+    has_stock: boolean;
+    recommended_prices: {
+        amount: number;
+        currency: string;
+        country: string;
+    }[];
+    manufacturer: {
+        manufacturer_id: string;
+        manufacturer_name: string;
+    };
+    brand: {
+        brand_id: string;
+        name: string;
+    };
+    main_category: {
+        category_id: string;
+        category_name: string;
+    };
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let page = 1;
-        let hasMoreProducts = true;
-        let allProducts = [];
+const useProductList = (apiUrl: string, pageSize: number) => {
+    const [products, setProducts] = useState<Product[]>([]);
 
-        while (hasMoreProducts) {
-          const response = await axios.post(apiUrl, {
-            query: `
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let page = 1;
+                let hasMoreProducts = true;
+                let allProducts: Product[] = [];
+                let totalProducts = 0;
+
+                while (hasMoreProducts) {
+                    const response = await axios.post(apiUrl, {
+                        query: `
               query SearchProducts($size: Int, $page: Int) {
                 response: searchProducts(
                   productHasStock: true
@@ -51,32 +77,34 @@ const useProductList = (apiUrl, pageSize) => {
                 }
               }
             `,
-            variables: {
-              size: pageSize,
-              page: page
+                        variables: {
+                            size: pageSize,
+                            page,
+                        },
+                    });
+
+                    const responseData = response.data.data.response;
+                    const fetchedProducts = responseData.products;
+                    allProducts = allProducts.concat(fetchedProducts);
+
+                    totalProducts = responseData.metadata.totalProducts;
+                    const remainingProducts =
+                        totalProducts - allProducts.length;
+                    hasMoreProducts = remainingProducts > 0;
+
+                    page++;
+                }
+
+                setProducts(allProducts);
+            } catch (error) {
+                console.error('Error:', error);
             }
-          });
+        };
 
-          const responseData = response.data.data.response;
-          const products = responseData.products;
-          allProducts = allProducts.concat(products);
+        fetchData();
+    }, [apiUrl, pageSize]);
 
-          const remainingProducts = responseData.metadata.totalProducts - allProducts.length;
-          hasMoreProducts = remainingProducts > 0;
-
-          page++;
-        }
-
-        setProducts(allProducts);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return products;
+    return products;
 };
 
 export default useProductList;
