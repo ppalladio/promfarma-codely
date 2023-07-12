@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import Card from '../ui/Card';
 import Pagination from '../Main/Pagination';
 import useProductList from '../hooks/useProductList';
+import useFavorite from '../hooks/useFavorite';
 
 interface Product {
     product_id: string;
@@ -41,7 +42,10 @@ const ProductList: React.FC<ProductListProps> = ({
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
     const [page, setPage] = useState(1); // New state variable for the current page
-
+    const { items: favoriteItems, addItem, removeItem } = useFavorite();
+	const isFavorite = (productId: string) => {
+        return favoriteItems.some(item => item.product_id === productId);
+    }
     const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
     const pageSize = 14;
     const { products, loading } = useProductList({ apiUrl, pageSize, page });
@@ -79,14 +83,11 @@ const ProductList: React.FC<ProductListProps> = ({
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
-    const handleToggleFavorite = (productId: string) => {
-        if (favoriteProducts.includes(productId)) {
-            const updatedFavorites = favoriteProducts.filter(
-                (id) => id !== productId,
-            );
-            setFavoriteProducts(updatedFavorites);
+	const handleToggleFavorite = (product: Product) => {
+        if (isFavorite(product.product_id)) {
+            removeItem(product.product_id);
         } else {
-            setFavoriteProducts([...favoriteProducts, productId]);
+            addItem(product);
         }
     };
 
@@ -99,22 +100,18 @@ const ProductList: React.FC<ProductListProps> = ({
     }
     return (
         <div className="flex flex-wrap my-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-                {displayedProducts.map((product) => (
-                    <div key={product.product_id}>
-                        <Card
-                            data={product}
-                            favorite={favoriteProducts.includes(
-                                product.product_id,
-                            )}
-                            onToggleFavorite={() =>
-                                handleToggleFavorite(product.product_id)
-                            }
-                            router={router}
-                        />
-                    </div>
-                ))}
-            </div>
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+            {displayedProducts.map((product) => (
+                <div key={product.product_id}>
+                    <Card
+                        data={product}
+                        favorite={isFavorite(product.product_id)}
+                        onToggleFavorite={() => handleToggleFavorite(product)}
+                        router={router}
+                    />
+                </div>
+            ))}
+        </div>
             <div className="w-full mt-[66px]">
                 <Pagination
                     currentPage={currentPage}
