@@ -4,56 +4,56 @@ import useFavorite from '@/app/Components/hooks/useFavorite';
 import { useRouter } from 'next/navigation';
 
 interface Product {
-    product_id: string;
-    updated_at: string;
-    name: string;
-    product_state: string;
-    has_stock: boolean;
-    recommended_prices: {
-        amount: number;
-        currency: string;
-        country: string;
-    }[];
-    manufacturer: {
-        manufacturer_id: string;
-        manufacturer_name: string;
-    };
-    brand: {
-        brand_id: string;
-        name: string;
-    };
-    main_category: {
-        category_id: string;
-        category_name: string;
-    };
-}
-
-interface CardProps {
-    data: Product;
-    favorite: boolean;
-    onToggleFavorite: () => void;
-    router: any;
-}
-
-const Card: React.FC<CardProps> = ({
+	product_id: string;
+	updated_at: string;
+	name: string;
+	product_state: string;
+	has_stock: boolean;
+	recommended_prices: {
+	  amount: number;
+	  currency: string;
+	  country: string;
+	}[];
+	manufacturer: {
+	  manufacturer_id: string;
+	  manufacturer_name: string;
+	};
+	brand: {
+	  brand_id: string;
+	  name: string;
+	};
+	main_category: {
+	  category_id: string;
+	  category_name: string;
+	};
+  }
+  
+  interface CardProps {
+	data: Product;
+	favorite: boolean;
+	router: any;
+  }
+  
+  const Card: React.FC<CardProps> = ({
 	data,
 	favorite: isFavorite,
-	onToggleFavorite,
+	router,
   }) => {
 	const favorite = useFavorite();
-	const router = useRouter();
+	
   
-	const handleToggleFavorite: MouseEventHandler<SVGSVGElement> = (event) => {
+	const handleToggleFavorite = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
 	  event.stopPropagation();
 	  if (favorite.hasItem(data.product_id)) {
 		favorite.removeItem(data.product_id);
 	  } else {
 		favorite.addItem(data);
 	  }
+	  isFavorite=!isFavorite;
 	};
   
 	const handleCardClick = () => {
-	  router.push(`/product/${data.product_id}`);
+	  router.push(`/products/${data.product_id}`);
 	};
   
 	return (

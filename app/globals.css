@@ -70,7 +70,7 @@ body {
 }
 
 .favorite-icon--active {
-    color: #f27a7d;
+    color: red !important;
 }
 
 .box-shadow {
