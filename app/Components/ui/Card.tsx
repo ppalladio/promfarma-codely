@@ -44,17 +44,12 @@ const Card: React.FC<CardProps> = ({
 
     const handleToggleFavorite: MouseEventHandler<SVGSVGElement> = (event) => {
         event.stopPropagation();
-        if (favorite.hasItem(data.product_id)) {
-            favorite.removeItem(data.product_id);
-        } else {
-            favorite.addItem(data);
-        }
-        onToggleFavorite(data.product_id); 
+        onToggleFavorite(data.product_id);
     };
 
-	const handleCardClick = () => {
-		router.push(`/product/${data?.product_id}`);
-	};
+    const handleCardClick = () => {
+        router.push(`/product/${data?.product_id}`);
+    };
 
     return (
         <div
