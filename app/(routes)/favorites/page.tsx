@@ -7,18 +7,15 @@ import FavoriteItems from './Components/FavoriteItems';
 
 export const revalidate = 0;
 
-const CartPage = () => {
+const FavoritePage = () => {
     const [isMounted, setIsMounted] = useState(false);
     const favorite = useFavorite();
-
     useEffect(() => {
         setIsMounted(true);
     }, []);
-
     if (!isMounted) {
         return null;
     }
-
     return (
         <div className="bg-white">
             <div className="px-4 py-16 sm:px-6 lg:px-8">
@@ -47,4 +44,4 @@ const CartPage = () => {
     );
 };
 
-export default CartPage;
+export default FavoritePage;
