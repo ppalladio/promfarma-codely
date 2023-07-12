@@ -3,17 +3,23 @@ import '@testing-library/jest-dom'
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
-test('renders pagination buttons correctly', () => {
-  const onPageChangeMock = jest.fn();
-  const totalPages = 5;
-  const currentPage = 3;
 
-  const { getAllByRole } = render(
-    <Pagination
-      currentPage={currentPage}
-      totalPages={totalPages}
-      onPageChange={onPageChangeMock}
-    />
+describe('Pagination function', () => {
+  it ('should be declared', () => {
+      expect(typeof Pagination).toBe('function');
+});
+
+  it('renders pagination buttons correctly', () => {
+   const onPageChangeMock = jest.fn();
+   const totalPages = 5;
+   const currentPage = 3;
+
+    const { getAllByRole } = render(
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChangeMock}
+      />
   );
 
   const buttons = getAllByRole('button');
@@ -26,4 +32,5 @@ test('renders pagination buttons correctly', () => {
 
   fireEvent.click(buttons[2]);
   expect(onPageChangeMock).toHaveBeenCalledWith(3);
+});
 });
