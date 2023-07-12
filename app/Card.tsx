@@ -1,57 +1,69 @@
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { FaHeart } from 'react-icons/fa';
+import React, { MouseEventHandler } from 'react';
+import ButtonFav from './Components/ButtonFav';
+import useFavorite from '@/app/Components/hooks/useFavorite';
+
+interface Product {
+  product_id: string;
+  updated_at: string;
+  name: string;
+  product_state: string;
+  has_stock: boolean;
+  recommended_prices: {
+    amount: number;
+    currency: string;
+    country: string;
+  }[];
+  manufacturer: {
+    manufacturer_id: string;
+    manufacturer_name: string;
+  };
+  brand: {
+    brand_id: string;
+    name: string;
+  };
+  main_category: {
+    category_id: string;
+    category_name: string;
+  };
+}
 
 interface CardProps {
-    id: string;
-    name: string;
-    state?: string;
-    brandName?: string;
-    brandId?: string;
-    price?: number | string; // Update the type to allow null
-    favorite?: boolean; // Add the favorite prop
-    favoriteImg?: string;
-    className?: string;
+  data: Product;
+  favorite: boolean;
+  onToggleFavorite: () => void;
+  router: any;
 }
 
 const Card: React.FC<CardProps> = ({
-    id,
-    name,
-    state,
-    brandName,
-    price,
-    className,
+  data,
+  favorite: isFavorite,
+  onToggleFavorite,
 }) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-    const router = useRouter();
-    const handleClick = () => {
-        router.push(`/product/${id}`);
-    };
+  const favorite = useFavorite();
 
-    const handleFavoriteClick = () => {
-        setIsFavorite(!isFavorite);
-    };
+  const handleToggleFavorite: MouseEventHandler<SVGSVGElement> = (event) => {
+    event.stopPropagation();
+    if (favorite.hasItem(data.product_id)) {
+      favorite.removeItem(data.product_id);
+    } else {
+      favorite.addItem(data);
+    }
+  };
 
-    return (
-        <div
-            onClick={handleClick}
-            className={`relative flex flex-wrap flex-col rounded-[5px] h-[360px] p-3 sm:p-1 my-2 cursor-default ${className}`}
-        >
-            <FaHeart
-                className={`favorite-icon ${
-                    isFavorite ? 'favorite-icon--active' : ''
-                }`}
-                onClick={handleFavoriteClick}
-            />
-            <div className="card">
-                <hr />
-                <h2 className="text-lg text-black text-center pt-3 ">{name}</h2>
-                {price !== null && <p>{price}</p>}
-                {brandName && <p className="">{brandName}</p>}
-                <hr />
-            </div>
-        </div>
-    );
+  return (
+    <div className="relative flex flex-wrap flex-col rounded-[5px] h-[360px] p-3 sm:p-1 my-2 cursor-default">
+      <ButtonFav isFavorite={isFavorite} onToggle={handleToggleFavorite} />
+      <div className="card">
+        <hr />
+        <h2 className="text-lg text-black text-center pt-3">{data.name}</h2>
+        {data.recommended_prices.length > 0 && (
+          <p>{data.recommended_prices[0]?.amount}</p>
+        )}
+        {data.brand && <p className="">{data.brand.name}</p>}
+        <hr />
+      </div>
+    </div>
+  );
 };
 
 export default Card;

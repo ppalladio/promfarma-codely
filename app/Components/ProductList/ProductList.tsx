@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Card from '@/app/Card';
+import { useRouter } from 'next/navigation';
+import Card from '../../Card';
 import Pagination from '../Main/Pagination';
 
 import useProductList from '../hooks/useProductList';
@@ -29,6 +30,12 @@ interface Product {
     };
 }
 
+interface CardProps extends Product {
+    favorite: boolean;
+    onToggleFavorite: () => void;
+    router: any;
+}
+
 interface ProductListProps {
     selectedCategories: string[];
     selectedBrands: string[];
@@ -40,31 +47,13 @@ const ProductList: React.FC<ProductListProps> = ({
 }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
 
     const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
     const pageSize = 14;
     const products = useProductList(apiUrl, pageSize);
-
+    const router = useRouter();
     const ITEMS_PER_PAGE = 8;
-
-    useEffect(() => {
-        const fetchData = () => {
-            const cachedProducts = localStorage.getItem('products');
-            if (cachedProducts) {
-                const parsedProducts: Product[] = JSON.parse(cachedProducts);
-                setFilteredProducts(parsedProducts);
-            } else {
-                setFilteredProducts(products);
-            }
-            setCurrentPage(1);
-        };
-
-        fetchData();
-    }, [products]);
-
-    useEffect(() => {
-        localStorage.setItem('products', JSON.stringify(filteredProducts));
-    }, [filteredProducts]);
 
     useEffect(() => {
         const filterProducts = () => {
@@ -98,6 +87,17 @@ const ProductList: React.FC<ProductListProps> = ({
         setCurrentPage(pageNumber);
     };
 
+    const handleToggleFavorite = (productId: string) => {
+        if (favoriteProducts.includes(productId)) {
+            const updatedFavorites = favoriteProducts.filter(
+                (id) => id !== productId,
+            );
+            setFavoriteProducts(updatedFavorites);
+        } else {
+            setFavoriteProducts([...favoriteProducts, productId]);
+        }
+    };
+
     return (
         <div className="flex flex-wrap my-3">
             {displayedProducts.length > 0 ? (
@@ -107,18 +107,14 @@ const ProductList: React.FC<ProductListProps> = ({
                         key={product.product_id}
                     >
                         <Card
-                           id={product.product_id}
-						   name={product.name || 'File not available'}
-						   price={
-							   product.recommended_prices.find((price) => price.country === 'ES')?.amount ||
-							   product.recommended_prices[0]?.amount ||
-							   'Not available'
-						   }
-						   state={product.product_state}
-						   brandId={product.brand.brand_id}
-						   brandName={product.brand.name}
-						   favorite={false}
-						   favoriteImg=""
+                            data={product}
+                            favorite={favoriteProducts.includes(
+                                product.product_id,
+                            )}
+                            onToggleFavorite={() =>
+                                handleToggleFavorite(product.product_id)
+                            }
+                            router={router}
                         />
                     </div>
                 ))
