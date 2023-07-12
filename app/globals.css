@@ -6,7 +6,12 @@ body,
 html,
 :root {
     height: 100%;
-    background-color: #f4f4f4;
+    /* background-color: #c2c2c2; */
+}
+* {
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
 }
 :root {
     --base: #f4f4f4;
@@ -18,7 +23,12 @@ html,
     --brand_ds_bg: #f66126;
     --brand_ds_text: #6c252e;
 }
-
+html {
+    margin: 0 16px 16px 16px;
+}
+.header {
+    margin: 0 0 0 0 !important;
+}
 .favorite-icon {
     position: absolute;
     top: 10px;
@@ -32,11 +42,6 @@ html,
     color: #f27a7d;
 }
 
-* {
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-}
 .box-shadow {
     box-shadow: 0px 20px 100px -10px rgba(66, 71, 91, 0.1);
 }

@@ -25,7 +25,7 @@ export default function RootLayout({
                 <ClientOnly>
                     <Header /> 
                 </ClientOnly>
-                <div className="pb-20 pt-28">{children}</div>
+                <div className="py-4">{children}</div>
 				<Footer />
             </body>
         </html>

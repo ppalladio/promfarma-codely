@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Card from '@/app/Card';
+import { useRouter } from 'next/navigation';
+import Card from '../ui/Card';
 import Pagination from '../Main/Pagination';
-
-import useProductList from '../Api/fetchProductData';
+import useProductList from '../hooks/useProductList';
+// Commented out on merge with master
+// import Card from '@/app/Card';
+// import Pagination from '../Main/Pagination';
+// import useProductList from '../Api/fetchProductData';
 
 interface Product {
     product_id: string;
@@ -29,6 +33,12 @@ interface Product {
     };
 }
 
+interface CardProps extends Product {
+    favorite: boolean;
+    onToggleFavorite: () => void;
+    router: any;
+}
+
 interface ProductListProps {
     selectedCategories: string[];
     selectedBrands: string[];
@@ -40,16 +50,42 @@ const ProductList: React.FC<ProductListProps> = ({
 }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
 
     const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
     const pageSize = 14;
     const products = useProductList(apiUrl, pageSize);
+<<<<<<< HEAD
 
     const ITEMS_PER_PAGE = 8; // Number of items to display per page
 
     useEffect(() => {
         setFilteredProducts(products);
         setCurrentPage(1); // Reset to the first page when filters change
+=======
+    const router = useRouter();
+    const ITEMS_PER_PAGE = 8;
+
+    useEffect(() => {
+        const filterProducts = () => {
+            const filtered = products.filter((product) => {
+                const isSelectedCategory =
+                    selectedCategories.length === 0 ||
+                    (product.main_category &&
+                        selectedCategories.includes(
+                            product.main_category.category_id,
+                        ));
+                const isSelectedBrand =
+                    selectedBrands.length === 0 ||
+                    selectedBrands.includes(product.brand.brand_id);
+                return isSelectedCategory && isSelectedBrand;
+            });
+            setFilteredProducts(filtered);
+            setCurrentPage(1);
+        };
+
+        filterProducts();
+>>>>>>> master
     }, [selectedCategories, selectedBrands, products]);
 
     const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -63,6 +99,17 @@ const ProductList: React.FC<ProductListProps> = ({
         setCurrentPage(pageNumber);
     };
 
+    const handleToggleFavorite = (productId: string) => {
+        if (favoriteProducts.includes(productId)) {
+            const updatedFavorites = favoriteProducts.filter(
+                (id) => id !== productId,
+            );
+            setFavoriteProducts(updatedFavorites);
+        } else {
+            setFavoriteProducts([...favoriteProducts, productId]);
+        }
+    };
+
     return (
         <div className="flex flex-wrap my-3">
             {displayedProducts.length > 0 ? (
@@ -72,6 +119,7 @@ const ProductList: React.FC<ProductListProps> = ({
                         key={product.product_id}
                     >
                         <Card
+<<<<<<< HEAD
                             id={product.product_id}
                             name={product?.name ?? ''}
                             price={
@@ -86,6 +134,16 @@ const ProductList: React.FC<ProductListProps> = ({
                             brandName={product.brand.name}
                             favorite={false}
                             favoriteImg=""
+=======
+                            data={product}
+                            favorite={favoriteProducts.includes(
+                                product.product_id,
+                            )}
+                            onToggleFavorite={() =>
+                                handleToggleFavorite(product.product_id)
+                            }
+                            router={router}
+>>>>>>> master
                         />
                     </div>
                 ))

@@ -1,0 +1,9 @@
+.header {
+    justify-content: space-between;
+    display: flex;
+	margin: 0 !important;
+}
+
+.headerNav {
+    padding: 1rem;
+}

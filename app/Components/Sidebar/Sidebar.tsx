@@ -58,14 +58,11 @@ const Sidebar: React.FC<SidebarProps> = ({
     };
 
     return (
-        <div className="flex flex-col h-screen">
-            <div className="flex flex-col leading-[20px] h-1/2 overflow-y-auto mb-[80px]">
-                <h2 className="sticky top-0 bg-white py-2 px-4 flex justify-between items-center">
-                    Categories
-                    <button
-                        className="ml-2 text-blue-500 flex items-center"
-                        onClick={toggleCategoryOrder}
-                    >
+        <div className="flex flex-col h-screen whitespace-nowrap mt-[80px]">
+            <div className="flex flex-col leading-[20px] h-1/2 overflow-y-auto mb-[80px] border-[1px] border-slate-950">
+                <h2 className="sticky top-0 bg-dark_gray py-2 px-4 flex flex-row justify-between items-center ">
+                    Category
+                    <button onClick={toggleCategoryOrder}>
                         <Image
                             width={20}
                             height={20}
@@ -74,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         />
                     </button>
                 </h2>
-                <ul>
+                <ul className=" px-2">
                     {getOrderedCategories().map(
                         ([categoryId, categoryName]) => (
                             <li key={categoryId}>
@@ -87,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                         onChange={() =>
                                             handleCategoryToggle(categoryId)
                                         }
-										className='mr-2'
+                                        className="mr-2"
                                     />
                                     {categoryName}
                                 </label>
@@ -97,13 +94,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </ul>
             </div>
 
-            <div className="flex flex-col leading-[20px] h-1/2 overflow-y-auto">
-                <h2 className="sticky top-0 bg-white py-2 px-4 flex justify-between items-center">
+            <div className="flex flex-col leading-[20px] h-1/2 overflow-y-auto border-[1px] border-slate-950">
+                <h2 className="sticky top-0 bg-dark_gray py-2 px-4 flex flex-row justify-between items-center ">
                     Brands
-                    <button
-                        className="ml-2 text-blue-500 flex items-center"
-                        onClick={toggleBrandOrder}
-                    >
+                    <button onClick={toggleBrandOrder}>
                         <Image
                             width={20}
                             height={20}
@@ -112,11 +106,12 @@ const Sidebar: React.FC<SidebarProps> = ({
                         />
                     </button>
                 </h2>
-                <ul>
+                <ul className=" px-2">
                     {getOrderedBrands().map(([brandId, brand]) => (
                         <li key={brandId}>
                             <label>
-                                <input className='mr-2'
+                                <input
+                                    className="mr-2"
                                     type="checkbox"
                                     checked={selectedBrands.includes(brandId)}
                                     onChange={() => handleBrandToggle(brandId)}
