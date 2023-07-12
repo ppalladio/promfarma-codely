@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Card from '../ui/Card';
 import Pagination from '../Main/Pagination';
+
 import useProductList from '../hooks/useProductList';
-// Commented out on merge with master
-// import Card from '@/app/Card';
-// import Pagination from '../Main/Pagination';
-// import useProductList from '../Api/fetchProductData';
 
 interface Product {
     product_id: string;
@@ -55,14 +52,6 @@ const ProductList: React.FC<ProductListProps> = ({
     const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
     const pageSize = 14;
     const products = useProductList(apiUrl, pageSize);
-<<<<<<< HEAD
-
-    const ITEMS_PER_PAGE = 8; // Number of items to display per page
-
-    useEffect(() => {
-        setFilteredProducts(products);
-        setCurrentPage(1); // Reset to the first page when filters change
-=======
     const router = useRouter();
     const ITEMS_PER_PAGE = 8;
 
@@ -85,7 +74,6 @@ const ProductList: React.FC<ProductListProps> = ({
         };
 
         filterProducts();
->>>>>>> master
     }, [selectedCategories, selectedBrands, products]);
 
     const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -119,22 +107,6 @@ const ProductList: React.FC<ProductListProps> = ({
                         key={product.product_id}
                     >
                         <Card
-<<<<<<< HEAD
-                            id={product.product_id}
-                            name={product?.name ?? ''}
-                            price={
-                                product.recommended_prices.find(
-                                    (price) => price.country === 'ES',
-                                )?.amount ??
-                                product.recommended_prices[0]?.amount ??
-                                'Not available'
-                            }
-                            state={product.product_state}
-                            brandId={product.brand.brand_id}
-                            brandName={product.brand.name}
-                            favorite={false}
-                            favoriteImg=""
-=======
                             data={product}
                             favorite={favoriteProducts.includes(
                                 product.product_id,
@@ -143,7 +115,6 @@ const ProductList: React.FC<ProductListProps> = ({
                                 handleToggleFavorite(product.product_id)
                             }
                             router={router}
->>>>>>> master
                         />
                     </div>
                 ))
