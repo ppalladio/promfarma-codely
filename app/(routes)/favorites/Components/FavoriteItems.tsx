@@ -45,7 +45,7 @@ const CartItem: React.FC<FavoriteItemProps> = ({ data }) => {
                 <div className="absolute z-10 right-0 top-0">
                     <IconButton onClick={onRemove} icon={<X size={15} />} />
                 </div>
-                <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
+                <div className="relative items-center justify-center pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
                     <div className="flex justify-between">
                         <p className=" text-lg font-semibold text-black">
                             {data.name}
@@ -53,9 +53,16 @@ const CartItem: React.FC<FavoriteItemProps> = ({ data }) => {
                     </div>
 
                     <div className="mt-1 flex text-sm">
-                        <p className="text-gray-500">{data.brand.name}</p>
+                        <p className="capitalize  text-gray-500"> <span className='text-black text-lg font-600'>
+							 Brand {" "}
+							</span>
+							 {data.brand.name}</p>
                         <p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">
-                            {data.main_category.category_name}
+                        <span className='text-lg font-500 text-black'>
+
+						Category{" "}
+						</span>
+						    {data.main_category.category_name}
                         </p>
                     </div>
 
@@ -64,7 +71,7 @@ const CartItem: React.FC<FavoriteItemProps> = ({ data }) => {
                             (price) => price.country === 'ES',
                         )?.amount ||
                             data.recommended_prices[0]?.amount ||
-                            'Not available'}
+                            'Price Not available'} &#8364;
                     </span>
                 </div>
             </div>

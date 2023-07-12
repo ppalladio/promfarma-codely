@@ -36,14 +36,14 @@ const Main = () => {
     };
 
     return (
-        <section className="flex flex-row">
+        <section className="flex flex-row lg:px-6 mb-6">
             <Sidebar
                 selectedCategories={selectedCategories}
                 selectedBrands={selectedBrands}
                 onCategoryToggle={handleCategoryToggle}
                 onBrandToggle={handleBrandToggle}
             />
-            <div className="flex flex-col ml-6">
+            <div className="flex flex-col mx-3">
                 <ToggledTags
                     selectedCategories={selectedCategories}
                     selectedBrands={selectedBrands}
@@ -52,10 +52,12 @@ const Main = () => {
                     onCategoryToggle={handleCategoryToggle}
                     onBrandToggle={handleBrandToggle}
                 />
-                <ProductList
-                    selectedCategories={selectedCategories}
-                    selectedBrands={selectedBrands}
-                />
+                <div className="product-list h-full overflow-y-auto">
+                    <ProductList
+                        selectedCategories={selectedCategories}
+                        selectedBrands={selectedBrands}
+                    />
+                </div>
             </div>
         </section>
     );

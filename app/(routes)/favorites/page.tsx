@@ -26,7 +26,7 @@ const FavoritePage = () => {
                     <div className="lg:col-span-7">
                         {favorite.items.length === 0 && (
                             <p className="text-neutral-500">
-                                No items added to cart.
+                                No items added to favorite.
                             </p>
                         )}
                         <ul>
