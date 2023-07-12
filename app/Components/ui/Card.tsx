@@ -51,7 +51,7 @@ const Card: React.FC<CardProps> = ({
     };
 
     return (
-        <div className="relative flex flex-wrap flex-col rounded-[5px] h-[360px] p-3 sm:p-1 my-2 cursor-default">
+        <div className="relative flex flex-wrap flex-col rounded-[5px] w-full h-[360px] p-3 sm:p-1 my-2 cursor-default">
             <ButtonFav
                 isFavorite={isFavorite}
                 onToggle={handleToggleFavorite}

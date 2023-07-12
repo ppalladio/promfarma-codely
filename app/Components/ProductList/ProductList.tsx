@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Card from '../ui/Card';
 import Pagination from '../Main/Pagination';
-
 import useProductList from '../hooks/useProductList';
 
 interface Product {
@@ -28,12 +27,6 @@ interface Product {
         category_id: string;
         category_name: string;
     };
-}
-
-interface CardProps extends Product {
-    favorite: boolean;
-    onToggleFavorite: () => void;
-    router: any;
 }
 
 interface ProductListProps {
@@ -101,27 +94,26 @@ const ProductList: React.FC<ProductListProps> = ({
     return (
         <div className="flex flex-wrap my-3">
             {displayedProducts.length > 0 ? (
-                displayedProducts.map((product) => (
-                    <div
-                        className="w-full sm:w-1/2 lg:w-1/4 p-2"
-                        key={product.product_id}
-                    >
-                        <Card
-                            data={product}
-                            favorite={favoriteProducts.includes(
-                                product.product_id,
-                            )}
-                            onToggleFavorite={() =>
-                                handleToggleFavorite(product.product_id)
-                            }
-                            router={router}
-                        />
-                    </div>
-                ))
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+                    {displayedProducts.map((product) => (
+                        <div key={product.product_id}>
+                            <Card
+                                data={product}
+                                favorite={favoriteProducts.includes(
+                                    product.product_id,
+                                )}
+                                onToggleFavorite={() =>
+                                    handleToggleFavorite(product.product_id)
+                                }
+                                router={router}
+                            />
+                        </div>
+                    ))}
+                </div>
             ) : (
                 <p>No products available.</p>
             )}
-            <div className="">
+            <div className="w-full">
                 <Pagination
                     currentPage={currentPage}
                     totalPages={totalPages}
