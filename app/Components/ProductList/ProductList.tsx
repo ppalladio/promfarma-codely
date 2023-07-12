@@ -28,7 +28,6 @@ interface Product {
         category_name: string;
     };
 }
-
 interface ProductListProps {
     selectedCategories: string[];
     selectedBrands: string[];
@@ -41,10 +40,11 @@ const ProductList: React.FC<ProductListProps> = ({
     const [currentPage, setCurrentPage] = useState(1);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
+    const [page, setPage] = useState(1); // New state variable for the current page
 
     const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
     const pageSize = 14;
-    const { products, loading } = useProductList(apiUrl, pageSize);
+    const { products, loading } = useProductList({ apiUrl, pageSize, page });
     const router = useRouter();
     const ITEMS_PER_PAGE = 8;
 
@@ -79,10 +79,11 @@ const ProductList: React.FC<ProductListProps> = ({
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
-
     const handleToggleFavorite = (productId: string) => {
         if (favoriteProducts.includes(productId)) {
-            const updatedFavorites = favoriteProducts.filter((id) => id !== productId);
+            const updatedFavorites = favoriteProducts.filter(
+                (id) => id !== productId,
+            );
             setFavoriteProducts(updatedFavorites);
         } else {
             setFavoriteProducts([...favoriteProducts, productId]);
@@ -96,7 +97,6 @@ const ProductList: React.FC<ProductListProps> = ({
     if (!products || products.length === 0) {
         return <p>No products available.</p>;
     }
-
     return (
         <div className="flex flex-wrap my-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
@@ -104,14 +104,18 @@ const ProductList: React.FC<ProductListProps> = ({
                     <div key={product.product_id}>
                         <Card
                             data={product}
-                            favorite={favoriteProducts.includes(product.product_id)}
-                            onToggleFavorite={() => handleToggleFavorite(product.product_id)}
+                            favorite={favoriteProducts.includes(
+                                product.product_id,
+                            )}
+                            onToggleFavorite={() =>
+                                handleToggleFavorite(product.product_id)
+                            }
                             router={router}
                         />
                     </div>
                 ))}
             </div>
-            <div className="w-full">
+            <div className="w-full mt-[66px]">
                 <Pagination
                     currentPage={currentPage}
                     totalPages={totalPages}

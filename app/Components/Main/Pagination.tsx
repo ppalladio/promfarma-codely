@@ -11,12 +11,44 @@ const Pagination: React.FC<PaginationProps> = ({
     totalPages,
     onPageChange,
 }) => {
-    const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+    const MAX_PAGES = 10;
+    let startPage = Math.max(currentPage - Math.floor(MAX_PAGES / 2), 1);
+    let endPage = Math.min(startPage + MAX_PAGES - 1, totalPages);
+
+    if (endPage - startPage + 1 < MAX_PAGES && startPage > 1) {
+        startPage = Math.max(endPage - MAX_PAGES + 1, 1);
+    }
+
+    const pages = Array.from(
+        { length: endPage - startPage + 1 },
+        (_, index) => startPage + index,
+    );
+
+    const goToPreviousPage = () => {
+        if (currentPage > 1) onPageChange(currentPage - 1);
+    };
+
+    const goToNextPage = () => {
+        if (currentPage < totalPages) onPageChange(currentPage + 1);
+    };
 
     return (
-        <div className=" flex justify-center w-full  mt-4">
+        <div className="flex justify-center w-full mt-19">
             {totalPages > 1 && (
                 <ul className="flex">
+                    <li>
+                        <button
+                            className={`px-3 py-1 mx-1 rounded ${
+                                currentPage === 1
+                                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                                    : 'bg-gray-200 text-gray-700'
+                            }`}
+                            disabled={currentPage === 1}
+                            onClick={goToPreviousPage}
+                        >
+                            Previous
+                        </button>
+                    </li>
                     {pages.map((page) => (
                         <li key={page}>
                             <button
@@ -31,6 +63,19 @@ const Pagination: React.FC<PaginationProps> = ({
                             </button>
                         </li>
                     ))}
+                    <li>
+                        <button
+                            className={`px-3 py-1 mx-1 rounded ${
+                                currentPage === totalPages
+                                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                                    : 'bg-gray-200 text-gray-700'
+                            }`}
+                            disabled={currentPage === totalPages}
+                            onClick={goToNextPage}
+                        >
+                            Next
+                        </button>
+                    </li>
                 </ul>
             )}
         </div>
