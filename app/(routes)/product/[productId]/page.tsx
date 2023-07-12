@@ -14,15 +14,13 @@ interface ProductPageProps {
 }
 
 const ProductPage: React.FC<ProductPageProps> = () => {
-    const { ...param } = useParams();
+    const { productId } = useParams();
 
-    console.log(param);
+    console.log(productId);
 
-    const id = param.productId;
-    console.log(id);
-
-    // Find the product with the matching ID
-    const product = products.find((product) => product.product_id === id);
+    const product = products.find(
+        (product) => product.product_id === productId,
+    );
 
     if (!product) {
         return <div>Product not found</div>;
@@ -33,7 +31,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
     const price = recommended_prices[0]?.amount;
     const category = main_category?.category_name;
     const manufacturerName = manufacturer?.manufacturer_name;
-    const brandName = brand?.name;
+    const brandName = (brand as { brand_id: string; name: string }).name;
 
     return (
         <div>
