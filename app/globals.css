@@ -41,6 +41,17 @@ body {
     box-sizing: border-box;
     overflow-x: hidden;
 }
+.sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.product-list {
+    flex: 1;
+    overflow-y: auto;
+}
 
 .header {
     margin: 0;

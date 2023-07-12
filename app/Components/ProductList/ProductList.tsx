@@ -44,7 +44,7 @@ const ProductList: React.FC<ProductListProps> = ({
 
     const apiUrl = 'https://graphql.stg.promofarma.com/graphql';
     const pageSize = 14;
-    const products = useProductList(apiUrl, pageSize);
+    const { products, loading } = useProductList(apiUrl, pageSize);
     const router = useRouter();
     const ITEMS_PER_PAGE = 8;
 
@@ -91,28 +91,32 @@ const ProductList: React.FC<ProductListProps> = ({
         }
     };
 
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (!products || products.length === 0) {
+        return <p>No products available.</p>;
+    }
+
     return (
         <div className="flex flex-wrap my-3">
-            {displayedProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-                    {displayedProducts.map((product) => (
-                        <div key={product.product_id}>
-                            <Card
-                                data={product}
-                                favorite={favoriteProducts.includes(
-                                    product.product_id,
-                                )}
-                                onToggleFavorite={() =>
-                                    handleToggleFavorite(product.product_id)
-                                }
-                                router={router}
-                            />
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p>No products available.</p>
-            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+                {displayedProducts.map((product) => (
+                    <div key={product.product_id}>
+                        <Card
+                            data={product}
+                            favorite={favoriteProducts.includes(
+                                product.product_id,
+                            )}
+                            onToggleFavorite={() =>
+                                handleToggleFavorite(product.product_id)
+                            }
+                            router={router}
+                        />
+                    </div>
+                ))}
+            </div>
             <div className="w-full">
                 <Pagination
                     currentPage={currentPage}

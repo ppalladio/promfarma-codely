@@ -6,7 +6,7 @@ import FavoriteAction from './FavoriteAction';
 import { useMediaQuery } from '@react-hook/media-query';
 
 const Header = () => {
-    const isDesktop = useMediaQuery('(min-width: 1024px)');
+    const isDesktop = useMediaQuery('(min-width: 992px)');
     return (
         <div >
             {isDesktop ? (
