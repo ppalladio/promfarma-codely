@@ -8,10 +8,10 @@ import { useMediaQuery } from '@react-hook/media-query';
 const Header = () => {
     const isDesktop = useMediaQuery('(min-width: 1024px)');
     return (
-        <div className='flex flex-row items-center'>
+        <div >
             {isDesktop ? (
-                <div className="mt-6 px-5">
-                    <header className="header text-white items-center w-full">
+                <div >
+                    <header className="flex py-6 px-5 flex-row justify-between bg-gray-100 text-white items-center w-full">
                         <Image
                             src={DesktopLogo}
                             alt="Desktop Logo"
@@ -22,7 +22,7 @@ const Header = () => {
                 </div>
             ) : (
                 <div>
-                    <header className="header bg-primary_green text-white items-center pt-3 w-full">
+                    <header className="flex flex-row justify-between px-3 py-2g bg-primary_green text-white items-center pt-3 w-full">
                         <Image src={MobileLogo} alt="Mobile Logo" className="w-[10rem]"/>
                         <FavoriteAction />
                     </header>
