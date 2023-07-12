@@ -53,16 +53,18 @@ const CartItem: React.FC<FavoriteItemProps> = ({ data }) => {
                     </div>
 
                     <div className="mt-1 flex text-sm">
-                        <p className="capitalize  text-gray-500"> <span className='text-black text-lg font-600'>
-							 Brand {" "}
-							</span>
-							 {data.brand.name}</p>
+                        <p className="capitalize  text-gray-500">
+                            {' '}
+                            <span className="text-black text-lg font-600">
+                                Brand{' '}
+                            </span>
+                            {data.brand.name}
+                        </p>
                         <p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">
-                        <span className='text-lg font-500 text-black'>
-
-						Category{" "}
-						</span>
-						    {data.main_category.category_name}
+                            <span className="text-lg font-500 text-black">
+                                Category{' '}
+                            </span>
+                            {data.main_category.category_name}
                         </p>
                     </div>
 
@@ -71,7 +73,8 @@ const CartItem: React.FC<FavoriteItemProps> = ({ data }) => {
                             (price) => price.country === 'ES',
                         )?.amount ||
                             data.recommended_prices[0]?.amount ||
-                            'Price Not available'} &#8364;
+                            'Price Not available'}{' '}
+                        &#8364;
                     </span>
                 </div>
             </div>
