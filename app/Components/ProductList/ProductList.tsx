@@ -80,15 +80,14 @@ const ProductList: React.FC<ProductListProps> = ({
         setCurrentPage(pageNumber);
     };
 
-	const handleToggleFavorite = (productId: string) => {
-		if (favoriteProducts.includes(productId)) {
-		  const updatedFavorites = favoriteProducts.filter((id) => id !== productId);
-		  setFavoriteProducts(updatedFavorites);
-		} else {
-		  setFavoriteProducts([...favoriteProducts, productId]);
-		}
-	  };
-	  
+    const handleToggleFavorite = (productId: string) => {
+        if (favoriteProducts.includes(productId)) {
+            const updatedFavorites = favoriteProducts.filter((id) => id !== productId);
+            setFavoriteProducts(updatedFavorites);
+        } else {
+            setFavoriteProducts([...favoriteProducts, productId]);
+        }
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -103,13 +102,12 @@ const ProductList: React.FC<ProductListProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
                 {displayedProducts.map((product) => (
                     <div key={product.product_id}>
-                       <Card
-  data={product}
-  favorite={favoriteProducts.includes(product.product_id)}
-  onToggleFavorite={() => handleToggleFavorite(product.product_id)}
-  router={router}
-/>
-
+                        <Card
+                            data={product}
+                            favorite={favoriteProducts.includes(product.product_id)}
+                            onToggleFavorite={() => handleToggleFavorite(product.product_id)}
+                            router={router}
+                        />
                     </div>
                 ))}
             </div>

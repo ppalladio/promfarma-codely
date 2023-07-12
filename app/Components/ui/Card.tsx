@@ -31,25 +31,26 @@ interface Product {
   interface CardProps {
 	data: Product;
 	favorite: boolean;
+	onToggleFavorite: (productId: string) => void; // Update the type to include productId
 	router: any;
   }
   
   const Card: React.FC<CardProps> = ({
 	data,
 	favorite: isFavorite,
+	onToggleFavorite,
 	router,
   }) => {
 	const favorite = useFavorite();
-	
   
-	const handleToggleFavorite = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+	const handleToggleFavorite: MouseEventHandler<SVGSVGElement> = (event) => {
 	  event.stopPropagation();
 	  if (favorite.hasItem(data.product_id)) {
 		favorite.removeItem(data.product_id);
 	  } else {
 		favorite.addItem(data);
 	  }
-	  isFavorite=!isFavorite;
+	  onToggleFavorite(data.product_id); // Pass the productId to the onToggleFavorite function
 	};
   
 	const handleCardClick = () => {
@@ -74,5 +75,4 @@ interface Product {
 	  </div>
 	);
   };
-  
   export default Card;
