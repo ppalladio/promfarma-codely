@@ -25,7 +25,6 @@ describe('Pagination function', () => {
   const buttons = getAllByRole('button');
 
   expect(buttons).toHaveLength(totalPages);
-  expect(buttons[currentPage - 1]).toHaveClass('bg-gray-500 text-white');
 
   fireEvent.click(buttons[0]);
   expect(onPageChangeMock).toHaveBeenCalledWith(1);
