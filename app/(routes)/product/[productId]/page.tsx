@@ -3,7 +3,17 @@ import React from 'react';
 import { useParams } from 'next/navigation';
 import { products } from '@/app/Components/Constants/products';
 
-const ProductPage: React.FC = () => {
+interface ProductPageProps {
+    name: string;
+    brand: string;
+    price: number;
+    category: string;
+    description: string;
+    manufacturer: string;
+    hasStock?: boolean;
+}
+
+const ProductPage: React.FC<ProductPageProps> = () => {
     const { productId } = useParams();
 
     const product = products.find(
@@ -23,31 +33,14 @@ const ProductPage: React.FC = () => {
 
     return (
         <div className="px-4 py-10 sm:px-6 lg:px-8  flex flex-col align-center">
-            <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0 leading-5">
-                <h1 className="font-semibold text-2xl ">{name}</h1>
-                <p className="text-gray-500">
-                    {' '}
-                    <span className="font-semibold text-black text-lg">
-                        {' '}
-                        Price:{' '}
-                    </span>{' '}
-                    {price} <span className="text-brand_ds_text"> &#8364;</span>
-                </p>
-                <p className="text-gray-500">
-                    {' '}
-                    <span className="font-semibold text-black text-lg">
-                        Manufacturer:{' '}
-                    </span>
-                    {manufacturerName}
-                </p>
-                <p className="text-gray-500">
-                    {' '}
-                    <span className="font-semibold text-black text-lg">
-                        Category:{' '}
-                    </span>
-                    {category}
-                </p>
-            </div>
+     
+                <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0 leading-5">
+                    <h1 className='font-semibold text-2xl '>{name}</h1>
+                    <p className='text-gray-500'> <span className="font-semibold text-black text-lg"> Price: </span> {price} <span className='text-brand_ds_text'> &#8364;</span></p>
+                    <p className='text-gray-500'> <span className="font-semibold text-black text-lg">Manufacturer: </span>{manufacturerName}</p>
+                    <p className='text-gray-500'> <span className="font-semibold text-black text-lg">Category: </span>{category}</p>
+                </div>
+            
         </div>
     );
 };
