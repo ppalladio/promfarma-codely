@@ -31,5 +31,6 @@ npm test -- --coverage
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-this project used zustand package for the state management of the toggled favourite states, and keep them in the localStorage, to be more specific, a hook called useFavorite is created using create, persist and useJSONStorage functions.
-the styling is done following the mobile-first rule and a certain degree of responsiveness was applied where Tailwindcss was adapted majorly and combined with some vanilla CSS.
+In this project, we utilized the Zustand package for state management of toggled favorite states. The favorites are stored in the localStorage for persistent storage. To achieve this, we created a custom hook called useFavorite by employing the create, persist, and useJSONStorage functions.
+</br>
+For the styling aspect, we followed the mobile-first rule and incorporated a certain level of responsiveness. To accomplish this, we predominantly used Tailwind CSS while also incorporating some vanilla CSS techniques.
